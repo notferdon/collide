@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>COLLIDE | Continuous play</title>
+<!-- COLLIDE: two upholstered plus-shaped cushions you can grab and push into each other. Motion is an approximate planar
+     model with a render-only squish (interactive-response.js); it is not a physical simulation of the fabric. -->
+<style>
+@font-face{font-family:'TGHeros';src:url('fonts/texgyreheros-regular.otf') format('opentype');font-weight:400;font-display:swap}
+@font-face{font-family:'TGHeros';src:url('fonts/texgyreheros-bold.otf') format('opentype');font-weight:700;font-display:swap}
+@font-face{font-family:'TGHeros Cn';src:url('fonts/texgyreheroscn-regular.otf') format('opentype');font-weight:400;font-display:swap}
+@font-face{font-family:'TGHeros Cn';src:url('fonts/texgyreheroscn-bold.otf') format('opentype');font-weight:700;font-display:swap}
+:root{--bg:#efeeea;--ink:#111110;--ink-3:#77756f;--red:#a53d30;--font:'TGHeros',sans-serif;--font-cn:'TGHeros Cn',sans-serif}
+:root[data-art="b"]{--bg:#121211;--ink:#efeee9;--ink-3:#8f8d87}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;background:var(--bg);color:var(--ink);font:14px/1.4 var(--font);overflow:hidden}
+.cn{font-family:var(--font-cn);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+#app{display:flex;flex-direction:column;height:100dvh}
+header{display:flex;align-items:baseline;gap:14px;padding:22px 28px 0;flex:none}
+header b{letter-spacing:.14em;font-weight:700}
+#mode{margin-left:auto;color:var(--ink-3)}
+#stage{position:relative;flex:1;min-height:0}
+#gl{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab;display:block}
+#gl.held{cursor:grabbing}
+#hint{position:absolute;left:0;right:0;bottom:6px;text-align:center;pointer-events:none;color:var(--ink-3)}
+footer{display:flex;align-items:center;gap:18px;min-height:56px;padding:0 28px 10px;flex:none}
+#status{flex:1;min-width:0;color:var(--ink-3);font-size:13px}
+#clock{display:none}
+button{min-width:44px;height:44px;padding:0 4px;border:0;border-bottom:1px solid var(--ink);border-radius:0;background:transparent;color:var(--ink);font:700 11px/1 var(--font-cn);letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+a{color:var(--ink-3);min-height:44px;display:inline-flex;align-items:center}
+#settle{margin-left:auto;flex:none}
+header{padding-top:max(22px,env(safe-area-inset-top))}footer{padding-bottom:max(10px,env(safe-area-inset-bottom))}
+@media (max-width:600px){header{padding:max(16px,env(safe-area-inset-top)) 16px 0;gap:12px}#mode{margin-left:auto;max-width:62%;text-align:right;line-height:1.5}footer{gap:12px;padding:0 16px max(8px,env(safe-area-inset-bottom))}#status{font-size:12px;line-height:1.35}}
+</style>
+</head>
+<body>
+<div id="app">
+  <header><b class="cn">Ferdon / Collide</b><span id="mode" class="cn">Interactive material study · approximated soft-body response</span></header>
+  <section id="stage" aria-label="Two cushions: grab and push them"><canvas id="gl"></canvas><div id="hint" class="cn">Grab a cushion · push it into the other · let go</div></section>
+  <footer>
+    <span id="status" aria-live="polite">Loading…</span>
+    <span id="clock" class="cn">-</span>
+    <button id="settle" type="button" title="Return both cushions to their resting places">Settle</button>
+  </footer>
+</div>
+<script type="importmap">{ "imports": { "three": "./vendor/three/three.module.js" } }</script>
+<script type="module" src="./play.js"></script>
+</body>
+</html>
